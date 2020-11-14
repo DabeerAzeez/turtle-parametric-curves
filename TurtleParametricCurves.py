@@ -2,9 +2,7 @@ import turtle
 import time
 from math import *
 
-
 # TODO: Faster without compromising quality (as much)
-# TODO: Rainbow animation (https://clarle.github.io/yui3/yui/docs/color/rgb-slider.html)
 # TODO: Be able to input your own curve
 
 # Turtle Graphics setup
