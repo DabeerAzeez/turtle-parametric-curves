@@ -84,20 +84,19 @@ class ParametricCurve:
 
         # increment (r,g,b) color appropriately
         increment = (0, 0, 0)  # default
-        BASE_INCREMENT = 0.1
 
         if self.stage == 1:
-            increment = (0, COLOR_SPEED * BASE_INCREMENT, 0)   # Add green
+            increment = (0, COLOR_SPEED, 0)  # Add green
         elif self.stage == 2:
-            increment = (-COLOR_SPEED * BASE_INCREMENT, 0, 0)  # Remove red
+            increment = (-COLOR_SPEED, 0, 0)  # Remove red
         elif self.stage == 3:
-            increment = (0, 0, COLOR_SPEED * BASE_INCREMENT)   # Add blue
+            increment = (0, 0, COLOR_SPEED)  # Add blue
         elif self.stage == 4:
-            increment = (0, -COLOR_SPEED * BASE_INCREMENT, 0)  # Remove green
+            increment = (0, -COLOR_SPEED, 0)  # Remove green
         elif self.stage == 5:
-            increment = (COLOR_SPEED * BASE_INCREMENT, 0, 0)   # Add red
+            increment = (COLOR_SPEED, 0, 0)  # Add red
         elif self.stage == 6:
-            increment = (0, 0, -COLOR_SPEED * BASE_INCREMENT)  # Remove blue
+            increment = (0, 0, -COLOR_SPEED)  # Remove blue
 
         new_pencolor = tuple(p + q for p, q in zip(current_color, increment))  # Increment pen-color tuple element-wise
         new_pencolor = tuple(1 if color > 1 else color for color in new_pencolor)  # Check for extraneous color values
