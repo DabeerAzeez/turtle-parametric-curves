@@ -18,7 +18,7 @@ time.sleep(1)
 
 
 class ParametricCurve:
-    STEP_SIZE = 1/10  # Step size for pen; larger step size is faster but quality :(
+    STEP_SIZE = 1 / 10  # Step size for pen; larger step size is faster but lower quality :(
 
     def __init__(self, xeq, yeq, t_min, t_max, mag):
         self.t_min = t_min
@@ -65,7 +65,10 @@ class ParametricCurve:
         :return: new pen color tuple
         """
         # TODO: Account for non-rgb colors (e.g. "blue")
-        COLOR_SPEED = 0.5
+
+        STEPS = (self.t_max - self.t_min)/ParametricCurve.STEP_SIZE
+        NUM_STAGES = 6  # Rainbow pattern has 6 stages
+        COLOR_SPEED = NUM_STAGES / STEPS  # Lower values indicate smoother color transitions; suggested values 0-0.5
 
         current_color = input_turtle.pencolor()
 
@@ -129,7 +132,7 @@ default_curves = [heart, lisajous_curve, butterfly]
 def main():
     for curve in default_curves:
         curve.plot_curve()
-        if curve == default_curves[-1]:
+        if curve == default_curves[-1]:  # If you've reached the last curve
             input("Press enter to quit: ")
         else:
             input("Press enter to move on to the next curve: ")
