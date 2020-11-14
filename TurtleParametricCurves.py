@@ -4,7 +4,6 @@ from math import *
 
 # TODO: Faster without compromising quality (as much)
 # TODO: Be able to input your own curve
-# TODO: Documentation
 # TODO: Optional parameters for plotcurve()
 # TODO: Multithreading to draw multiple curves at once
 # TODO: Start at any arbitrary color
@@ -22,7 +21,7 @@ time.sleep(1)
 
 
 class ParametricCurve:
-    STEP_SIZE = 1 / 10  # Step size for pen; larger step size is faster but lower quality :(
+    STEP_SIZE = 1 / 100  # Step size for pen; larger step size is faster but lower quality :(
 
     def __init__(self, xeq, yeq, t_min, t_max, mag):
         self.t_min = t_min
@@ -71,7 +70,7 @@ class ParametricCurve:
         """
         # TODO: Account for non-rgb colors (e.g. "blue")
 
-        STEPS = (self.t_max - self.t_min)/ParametricCurve.STEP_SIZE
+        STEPS = (self.t_max - self.t_min) / ParametricCurve.STEP_SIZE
         NUM_STAGES = 6  # Rainbow pattern has 6 stages
         COLOR_SPEED = NUM_STAGES / STEPS  # Lower values indicate smoother color transitions; suggested values 0-0.5
 
@@ -94,15 +93,15 @@ class ParametricCurve:
         increment = (0, 0, 0)  # default
 
         if self.stage == 1:
-            increment = (0, COLOR_SPEED, 0)   # Add green
+            increment = (0, COLOR_SPEED, 0)  # Add green
         elif self.stage == 2:
             increment = (-COLOR_SPEED, 0, 0)  # Remove red
         elif self.stage == 3:
-            increment = (0, 0, COLOR_SPEED)   # Add blue
+            increment = (0, 0, COLOR_SPEED)  # Add blue
         elif self.stage == 4:
             increment = (0, -COLOR_SPEED, 0)  # Remove green
         elif self.stage == 5:
-            increment = (COLOR_SPEED, 0, 0)   # Add red
+            increment = (COLOR_SPEED, 0, 0)  # Add red
         elif self.stage == 6:
             increment = (0, 0, -COLOR_SPEED)  # Remove blue
 
@@ -129,13 +128,14 @@ class ParametricCurve:
             self.increment_color(turtle)
 
 
-# Default parametric curves
+# Default parametric curves—things I've gathered from the internet; NOT my own creations
 heart = ParametricCurve("16 * sin(t) ** 3", "13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t)", -pi, pi, 18)
 lisajous_curve = ParametricCurve("4*sin(12/13*t)", "3*sin(t)", 0, 16 * pi, 75)
 butterfly = ParametricCurve("sin(t)*(e**cos(t)-2*cos(4*t)-(sin(t/12)**5))",
                             "cos(t)*(e**cos(t)-2*cos(4*t)-(sin(t/12)**5))", 0, 2 * pi, 50)
+mystery = ParametricCurve("cos(t)-cos(80*t)*sin(t)", "2*sin(t)-sin(80*t)", 0, 2 * pi, 75)
 
-default_curves = [heart, lisajous_curve, butterfly]
+default_curves = [mystery, heart, lisajous_curve, butterfly]
 
 
 def main():
