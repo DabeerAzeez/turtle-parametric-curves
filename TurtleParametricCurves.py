@@ -11,9 +11,9 @@ wn.bgcolor("white")
 wn.title("Turtle Graphics")
 wn.setup(700, 700)
 
-pen = turtle.Turtle()
-pen.shape("turtle")
-pen.width(10)
+turtle = turtle.Turtle()
+turtle.shape("turtle")
+turtle.width(10)
 time.sleep(1)
 
 
@@ -53,10 +53,10 @@ class ParametricCurve:
     def go_to_start(self):
         t = self.t_min
 
-        pen.up()
-        pen.goto(self.mag_x, self.mag_y)
-        pen.color(1, 0, 0)  # reset color to red (beginning of rainbow)
-        pen.down()
+        turtle.up()
+        turtle.goto(self.mag_x, self.mag_y)
+        turtle.color(1, 0, 0)  # reset color to red (beginning of rainbow)
+        turtle.down()
 
     def increment_color(self, input_turtle):
         """
@@ -115,9 +115,9 @@ class ParametricCurve:
             if self.t >= self.t_max:
                 break
 
-            pen.goto(self.mag_x, self.mag_y)
+            turtle.goto(self.mag_x, self.mag_y)
             self.t += ParametricCurve.STEP_SIZE
-            self.increment_color(pen)
+            self.increment_color(turtle)
 
 
 # Default parametric curves
@@ -136,7 +136,7 @@ def main():
             input("Press enter to quit: ")
         else:
             input("Press enter to move on to the next curve: ")
-        pen.clear()
+        turtle.clear()
 
 
 if __name__ == "__main__":
