@@ -4,6 +4,10 @@ from math import *
 
 # TODO: Faster without compromising quality (as much)
 # TODO: Be able to input your own curve
+# TODO: Documentation
+# TODO: Optional parameters for plotcurve()
+# TODO: Multithreading to draw multiple curves at once
+# TODO: Start at any arbitrary color
 
 # Turtle Graphics setup
 wn = turtle.Screen()
@@ -27,20 +31,19 @@ class ParametricCurve:
         self.t = t_min  # Default
         t = self.t
 
-        self.xeq = xeq
+        self.xeq = xeq  # Evaluate (initial) x and y coordinates
         self.yeq = yeq
-
         self.x = eval(self.xeq)
         self.y = eval(self.yeq)
         self.mag = mag
         self.mag_x = self.mag * self.x
         self.mag_y = self.mag * self.y
 
-        self.stage = 1  # For colour changing
+        self.stage = 1  # For color changing
 
     def update_coords(self, t_input):
         """
-        Re-evaluates the coordinates for a new t value
+        Re-evaluates (x,y) coordinates for a new t value
         :param t_input: new t-value to re-evaluate the coordinates at
         """
         t = t_input
@@ -51,6 +54,9 @@ class ParametricCurve:
         self.mag_y = self.mag * self.y
 
     def go_to_start(self):
+        """
+        Lifts pen, drops it at the start of the parametric curve, and resets color
+        """
         t = self.t_min
 
         turtle.up()
@@ -60,9 +66,8 @@ class ParametricCurve:
 
     def increment_color(self, input_turtle):
         """
-        Increments colors in a rainbow fashion
-        :param input_turtle: turtle from Turtle
-        :return: new pen color tuple
+        Increments turtle pen color in a rainbow pattern
+        :param input_turtle: turtle object from turtle library
         """
         # TODO: Account for non-rgb colors (e.g. "blue")
 
@@ -85,28 +90,32 @@ class ParametricCurve:
         elif current_color == (1, 0, 1):
             self.stage = 6
 
-        # increment (r,g,b) color appropriately
+        # determine appropriate increment depending on progress through the rainbow
         increment = (0, 0, 0)  # default
 
         if self.stage == 1:
-            increment = (0, COLOR_SPEED, 0)  # Add green
+            increment = (0, COLOR_SPEED, 0)   # Add green
         elif self.stage == 2:
             increment = (-COLOR_SPEED, 0, 0)  # Remove red
         elif self.stage == 3:
-            increment = (0, 0, COLOR_SPEED)  # Add blue
+            increment = (0, 0, COLOR_SPEED)   # Add blue
         elif self.stage == 4:
             increment = (0, -COLOR_SPEED, 0)  # Remove green
         elif self.stage == 5:
-            increment = (COLOR_SPEED, 0, 0)  # Add red
+            increment = (COLOR_SPEED, 0, 0)   # Add red
         elif self.stage == 6:
             increment = (0, 0, -COLOR_SPEED)  # Remove blue
 
-        new_pencolor = tuple(p + q for p, q in zip(current_color, increment))  # Increment pen-color tuple element-wise
+        # Calculate new pen color
+        new_pencolor = tuple(p + q for p, q in zip(current_color, increment))  # Add increment to old pen color tuple
         new_pencolor = tuple(1 if color > 1 else color for color in new_pencolor)  # Check for extraneous color values
         new_pencolor = tuple(0 if color < 0 else color for color in new_pencolor)
         input_turtle.pencolor(new_pencolor)
 
     def plot_curve(self):
+        """
+        Plots the parametric curve, moving the pen incrementally throughout the curve and changing the pen color
+        """
         self.go_to_start()
 
         while True:
